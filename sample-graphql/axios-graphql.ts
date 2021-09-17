@@ -1,18 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
+import { AxiosProperties, Properties } from './interface/property';
 
-export interface Properties {
-  data: {
-    properties: Property[]
-  }
-}
-
-interface Property {
-  address: string;
-  addressName: string;
-  dipid: string;
-}
-
-const getProperties = async (numberOfProperties: number): Promise<AxiosResponse<Properties>> => {
+const getProperties = async (numberOfProperties: number): Promise<AxiosResponse<AxiosProperties>> => {
   return await axios({
     url: 'https://testharness.valocity-test.com.au/graphql',
     method: 'post',
@@ -31,7 +20,6 @@ const getProperties = async (numberOfProperties: number): Promise<AxiosResponse<
 
 getProperties(5)
   .then(response => {
-    console.log(response.status);
-    const properties = response.data as Properties;
-    console.log(properties.data.properties);
+    const properties: Properties = response.data.data;
+    console.log(properties.properties);
   });
